@@ -1,0 +1,24 @@
+
+# Build tools
+NVCC = /usr/local/cuda-5.5/bin/nvcc
+CXX = g++
+
+
+# here are all the objects
+OBJS = pgmUtility.o pgmProcess.o 
+
+
+# make and compile
+all: hw2
+
+pgmProcess.o: pgmProcess.cu
+	$(NVCC) -x cu -arch=sm_20 -I. -dc pgmProcess.cu -o pgmProcess.o 
+
+pgmUtility.o: pgmUtility.c
+	$(NVCC) -x cu -arch=sm_20 -I. -dc pgmUtility.c -o pgmUtility.o
+	 
+hw2: $(OBJS)
+	$(NVCC) -arch=sm_20 $(OBJS) -o hw2
+	
+clean:
+	rm -f *.o hw2

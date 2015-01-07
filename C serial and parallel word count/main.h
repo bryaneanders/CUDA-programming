@@ -1,0 +1,6 @@
+/*
+ * main.h 
+ * 
+ */
+ 
+double currentTime();

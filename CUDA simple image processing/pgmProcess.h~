@@ -1,0 +1,122 @@
+#ifndef pgm_process_h
+#define pgm_process_h
+
+/*  Function Name:
+ *      print_usage()
+ *      print_usage() Print the proper command line syntax to the console.
+ *
+ *  @return  	void
+ */
+__host__ void print_usage();
+
+
+/**
+ *  Function Name:
+ *      shorter_string()
+ *      shorter_string() returns length of the shorter of the 2 strings passec in as params
+ *
+ *  @param[in]  s1  First string whose length will be compared
+ *  @param[in]  s2  Second string whose length will be compared
+ *  @return         the length of the shorter string
+ */
+__host__ int shorter_string(char *s1, char *s2);
+
+/**
+ *  Function Name:
+ *      valid_circle_args()
+ *      valid_circle_args() Checks that the rows, cols, and radius are all > 0, though not nesicarily
+ *							within the range of the file. Checks that there are strings containing
+ *							.pmg for the filenames.
+ *
+ *  @param[in]  args	An array of strings that holds the command line args to be tested
+ *  @return         	0 if the args are found to be invalid, 1 if they are valid
+ */
+__host__ int valid_circle_args(char ** args);
+
+/**
+ *  Function Name:
+ *      valid_edge_args()
+ *      valid_edge_args() Checks that the edgeWidth is > 0 and that strings are provided for the files
+ *							contain .pmg
+ *
+ *  @param[in]  args	An array of strings that holds the command line args to be tested
+ *  @return         	0 if the args are found to be invalid, 1 if they are valid
+ */
+__host__ int valid_edge_args(char ** args);
+
+
+/**
+ *  Function Name:
+ *      open_file()
+ *      open_file() Tries to open a file with the given name in the given mode. Exits
+ *					if it fails to do so.
+ *
+ *  @param[in]  fname	A string containing the name of the file to open
+ * 	@param[in] 	mode	A string containing the mode to open the file in
+ *  @return         	A pointer to the opened file
+ */
+__host__ FILE* open_file(char *fname, char *mode);
+
+
+/**
+ *  Function Name:
+ *      do_circle_draw()
+ *      do_circle_draw() Transforms the command line arguments into a useable form that will be used
+ *						to read in the image, draw the circle on the image, and write the modified
+ *						image to another provided file.
+ *
+ *
+ *  @param[in]  argv	An array of strings that holds the command line arguments.
+ *  @return         	void
+ */
+__host__ void do_circle_draw(char ** argv);
+
+/**
+ *  Function Name:
+ *      do_edge_draw()
+ *      do_edge_draw() Transforms the command line arguments into a useable form that will be used
+ *						to read in the image, draw the edge on the image, and write the modified
+ *						image to another provided file.
+ *
+ *  @param[in]  argv	An array of strings that holds the command line arguments. 
+ *  @return         	void
+ */
+__host__ void do_edge_draw(char ** argv);
+
+c
+__device__ float distance( int p1[], int p2[] );
+
+/**
+ *  Function Name:
+ *      draw_circle()
+ *      draw_circle() draws a black circle centered on centerRow and Center col with the given radius.
+ *					  Each call checks one element of the pixels array
+ *
+ *  @param[in]  pixels		a 2d int array that contains the intensity values of the image
+ *  @param[in]  rows		the number of elements in a row of the pixels array
+ *	@param[in]  cols 		the number of elements in a column of the pixels array
+ *	@param[in]  centerRow	the row that the drawn circle will be cented on
+ *	@param[in]	centerCol 	the column that the drawn circle will be centered on
+ *	@param[in] 	radius		the size of the circle to be drawn around its center element
+ *  @return     void
+ */
+__global__ void draw_circle(int *pixels, int rows, int cols, int centerRow, 
+							int centerCols, int radius);
+										
+/**
+ *  Function Name:
+ *      draw_circle()
+ *      draw_circle() draws a black circle centered on centerRow and Center col with the given radius.
+ *					  Each call checks one element of the image
+ *
+ *  @param[in]  pixels		a 2d int array that contains the intensity values of the image
+ *  @param[in]  rows		the number of elements in a row of the pixels array
+ *	@param[in]  cols 		the number of elements in a column of the pixels array
+ *  @param[in]  edgeWidth	the number of pixels on the edge of the screen to black out
+ *  @return     void
+ */
+__global__ void draw_edge(int *pixels, int rows, int cols, int edgeWidth);
+
+
+
+#endif

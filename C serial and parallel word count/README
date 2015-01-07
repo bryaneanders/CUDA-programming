@@ -1,0 +1,8 @@
+Prof,
+
+This program implements parallel merge sorting for both alphabetical sorting
+and sorting by occurance.
+
+When sorting by count words with the same number of occurances are sorted reverse
+alphabetically, though this was more of a happy coincidence with how things wound
+up being implemented than anything particularly intentional.
